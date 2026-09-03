@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alerta de Conscientização - IFake</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container awareness-container">
+        <div class="logo-box">
+            <img src="{{ url_for('static', filename='image/logotipo-IFake.png') }}" alt="Logotipo IFake" class="logo">
+        </div>
+
+        <div class="alert-banner">
+            <span class="alert-icon">⚠️</span>
+            <h2>Isto foi um teste de Phishing!</h2>
+        </div>
+
+        <div class="privacy-badge">
+            🔒 <strong>Sua privacidade está protegida:</strong> Nenhum dado pessoal, usuário ou senha digitados foi gravado no banco de dados.
+        </div>
+
+        <p class="awareness-intro">
+            Esta página faz parte de um projeto acadêmico de conscientização sobre segurança da informação. O objetivo é demonstrar como páginas clonadas podem enganar usuários.
+        </p>
+
+        <div class="tips-card">
+            <h3>Dicas essenciais para identificar um Phishing real:</h3>
+            <ul class="tips-list">
+                <li>
+                    <strong>Confera o endereço de URL:</strong> Observe o domínio na barra de navegação antes de digitar qualquer dado.
+                </li>
+                <li>
+                    <strong>Atenção a senhas e dados sensíveis:</strong> Instituições de ensino e empresas sérias não solicitam confirmação de senha por e-mails com links diretos.
+                </li>
+                <li>
+                    <strong>Desconfie de urgência excessiva:</strong> Mensagens como "Sua conta será bloqueada hoje" tentam forçar uma reação rápida sem reflexão.
+                </li>
+                <li>
+                    <strong>Passe o cursor sobre os links:</strong> Sem clicar, veja para onde o link realmente aponta antes de acessar.
+                </li>
+            </ul>
+        </div>
+
+        <div class="footer-action">
+            <a href="/" class="btn-secondary">Voltar ao Início</a>
+        </div>
+    </div>
+</body>
+</html>

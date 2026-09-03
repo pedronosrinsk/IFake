@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Painel de Métricas - IFake</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container stats-container">
+        <div class="logo-box">
+            <img src="{{ url_for('static', filename='image/logotipo-IFake.png') }}" alt="Logotipo IFake" class="logo">
+        </div>
+
+        <h2>Métricas do Projeto de Conscientização</h2>
+        <p class="subtitle">Acompanhamento de acessos e formulários iniciados (dados anônimos)</p>
+
+        <div class="stats-grid">
+            <div class="stat-card">
+                <span class="stat-number">{{ views }}</span>
+                <span class="stat-label">Acessos à Página</span>
+            </div>
+
+            <div class="stat-card">
+                <span class="stat-number danger">{{ clicks }}</span>
+                <span class="stat-label">Envios do Formulário</span>
+            </div>
+
+            <div class="stat-card highlight">
+                <span class="stat-number">{{ "%.1f"|format(conversion_rate) }}%</span>
+                <span class="stat-label">Taxa de Vulnerabilidade</span>
+            </div>
+        </div>
+
+        <div class="progress-box">
+            <label>Nível de Exposição:</label>
+            <div class="progress-bar-bg">
+
+            </div>
+        </div>
+
+        <div class="footer-action">
+            <button onclick="window.location.reload();" class="btn-refresh">🔄 Atualizar Dados</button>
+            <a href="/" class="btn-secondary">Acessar Simulação</a>
+        </div>
+    </div>
+</body>
+</html>
