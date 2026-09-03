@@ -65,10 +65,22 @@ def submit():
     increment_metric('clicks')
     return redirect(url_for('awareness'))
 
+
+@app.route('/reset')
+def reset_metrics():
+    """Zera os contadores de acessos e cliques no banco de dados."""
+    with sqlite3.connect(DB_NAME) as conn:
+        cursor = conn.cursor()
+        cursor.execute('UPDATE metrics SET views = 0, clicks = 0 WHERE id = 1')
+        conn.commit()
+    return redirect(url_for('stats'))
+
 @app.route('/awareness')
 def awareness():
     """Exibe a página educativa informando sobre a simulação de phishing (awareness.html)."""
     return render_template('awareness.html')
+
+
 
 @app.route('/stats')
 def stats():
@@ -92,5 +104,7 @@ if __name__ == '__main__':
     print("Servidor iniciado com sucesso!")
     print("Acesse a simulação em: http://127.0.0.1:5000")
     print("Acesse as estatísticas em: http://127.0.0.1:5000/stats")
+
+    
     
     app.run(debug=True, port=5000)

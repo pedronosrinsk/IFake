@@ -222,3 +222,212 @@
     font-size: 20px;
     box-shadow: 0 2px 6px rgba(0,0,0,0.3);
   }
+/* ===================================================
+   ESTILOS EXCLUSIVOS: AWARENESS & STATS
+   (Escopados para não interferir no index.html)
+   =================================================== */
+
+/* Centralização aplicada apenas aos contêineres específicos */
+.awareness-container,
+.stats-container {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.awareness-container .logo-box,
+.stats-container .logo-box {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.subtitle {
+    text-align: center;
+    color: #777777;
+    font-size: 0.9rem;
+    margin-bottom: 25px;
+}
+
+/* --- PÁGINA EDUCATIVA (awareness.html) --- */
+.awareness-container {
+    border-top: 5px solid #d9534f;
+}
+
+.alert-banner {
+    background-color: #fdf2f2;
+    border: 1px solid #f8d7da;
+    border-radius: 8px;
+    padding: 15px;
+    text-align: center;
+    margin-bottom: 20px;
+    width: 100%;
+}
+
+.alert-icon {
+    font-size: 2rem;
+    display: block;
+    margin-bottom: 5px;
+}
+
+.alert-banner h2 {
+    color: #c0392b;
+    margin: 0;
+}
+
+.privacy-badge {
+    background-color: #e8f5e9;
+    color: #2e7d32;
+    padding: 12px 15px;
+    border-radius: 6px;
+    font-size: 0.88rem;
+    margin-bottom: 20px;
+    border: 1px solid #c8e6c9;
+    width: 100%;
+    text-align: left;
+}
+
+.tips-card {
+    background-color: #fafafa;
+    border: 1px solid #eeeeee;
+    padding: 20px;
+    border-radius: 8px;
+    margin-top: 15px;
+    width: 100%;
+    text-align: left;
+}
+
+.tips-card h3 {
+    font-size: 1rem;
+    color: #333333;
+    margin-bottom: 12px;
+}
+
+.tips-list {
+    list-style-type: disc;
+    padding-left: 20px;
+}
+
+.tips-list li {
+    font-size: 0.9rem;
+    margin-bottom: 10px;
+    color: #444444;
+}
+
+/* --- PAINEL DE MÉTRICAS (stats.html) --- */
+.stats-container {
+    border-top: 5px solid #007a3d;
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin: 20px 0;
+    width: 100%;
+}
+
+.stat-card {
+    background-color: #f8f9fa;
+    border: 1px solid #e9ecef;
+    border-radius: 8px;
+    padding: 15px 10px;
+    text-align: center;
+}
+
+.stat-number {
+    display: block;
+    font-size: 1.6rem;
+    font-weight: bold;
+    color: #007a3d;
+}
+
+.stat-number.danger {
+    color: #c0392b;
+}
+
+.stat-card.highlight {
+    background-color: #fff8e1;
+    border-color: #ffe082;
+}
+
+.stat-label {
+    font-size: 0.78rem;
+    color: #666666;
+    margin-top: 4px;
+    display: block;
+}
+
+.progress-box {
+    margin: 20px 0;
+    width: 100%;
+    text-align: left;
+}
+
+.progress-box label {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #555555;
+    margin-bottom: 6px;
+    display: block;
+}
+
+.progress-bar-bg {
+    width: 100%;
+    height: 12px;
+    background-color: #e0e0e0;
+    border-radius: 6px;
+    overflow: hidden;
+}
+
+.progress-bar-fill {
+    height: 100%;
+    background-color: #c0392b;
+    transition: width 0.5s ease;
+}
+
+/* --- BOTÕES DAS PÁGINAS ADICIONAIS --- */
+.footer-action {
+    display: flex;
+    gap: 10px;
+    margin-top: 25px;
+    justify-content: center;
+    width: 100%;
+}
+
+.btn-secondary {
+    display: inline-block;
+    text-align: center;
+    padding: 10px 18px;
+    background-color: #e0e0e0;
+    color: #333333;
+    text-decoration: none;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    font-weight: 600;
+}
+
+.btn-secondary:hover {
+    background-color: #d0d0d0;
+}
+
+.btn-refresh {
+    padding: 10px 18px;
+    background-color: #007a3d;
+    color: #ffffff;
+    border: none;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.btn-refresh:hover {
+    background-color: #005c2e;
+}
+
+@media (max-width: 480px) {
+    .stats-grid {
+        grid-template-columns: 1fr;
+    }
+}
