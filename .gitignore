@@ -1,0 +1,10 @@
+# Ignorar variáveis de ambiente (Senhas e Chaves)
+.env
+
+# Ignorar o banco de dados (Não queremos expor as métricas ou dados)
+*.db
+metrics.db
+
+# Ignorar arquivos temporários e pastas do sistema Python
+__pycache__/
+*.pyc
