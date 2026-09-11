@@ -118,4 +118,6 @@ if __name__ == '__main__':
     print("Servidor iniciado com sucesso!")
     print("Acesse a simulação em: http://127.0.0.1:5000")
     print(f"Acesse as estatísticas em: http://127.0.0.1:5000/stats?key={senha_verdadeira}")
-    app.run(debug=True, port=5000)
+    
+    # MODIFICAÇÃO AQUI: host='0.0.0.0' libera o servidor para a rede local
+    app.run(host='0.0.0.0', debug=True, port=5000)
