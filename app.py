@@ -7,7 +7,7 @@ from flask import Flask, render_template, redirect, url_for, request
 load_dotenv()
 
 app = Flask(__name__)
-DB_NAME = 'metrics.db'
+DB_NAME = "/home/Pedronosrinss/IFake/metrics.db"
 
 def init_db():
     with sqlite3.connect(DB_NAME) as conn:
