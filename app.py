@@ -1,17 +1,19 @@
 import sqlite3
-from flask import Flask, render_template, redirect, url_for
+import os
+from dotenv import load_dotenv
+from flask import Flask, render_template, redirect, url_for, request
 
-# Configuração da aplicação Flask
-# Por padrão, o Flask busca os arquivos HTML dentro da pasta 'templates' 
-# e os arquivos CSS/Imagens na pasta 'static'.
+# Carrega a senha escondida do arquivo .env
+load_dotenv()
+
 app = Flask(__name__)
-
 DB_NAME = 'metrics.db'
 
 def init_db():
-    """Cria a tabela de métricas no banco SQLite caso ela ainda não exista."""
     with sqlite3.connect(DB_NAME) as conn:
         cursor = conn.cursor()
+        
+        # Tabela de métricas (cliques e visualizações)
         cursor.execute('''
             CREATE TABLE IF NOT EXISTS metrics (
                 id INTEGER PRIMARY KEY,
@@ -19,15 +21,21 @@ def init_db():
                 clicks INTEGER DEFAULT 0
             )
         ''')
-        # Garante que o registro inicial com ID 1 exista
         cursor.execute('''
             INSERT OR IGNORE INTO metrics (id, views, clicks) 
             VALUES (1, 0, 0)
         ''')
+        
+        # Tabela para salvar APENAS os nomes
+        cursor.execute('''
+            CREATE TABLE IF NOT EXISTS captured_names (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                nome TEXT NOT NULL
+            )
+        ''')
         conn.commit()
 
 def increment_metric(field):
-    """Incrementa em +1 o campo informado ('views' ou 'clicks') sem salvar nenhum PII (dado pessoal)."""
     if field not in ['views', 'clicks']:
         return
     with sqlite3.connect(DB_NAME) as conn:
@@ -36,7 +44,6 @@ def increment_metric(field):
         conn.commit()
 
 def get_metrics():
-    """Retorna os totais de acessos e cliques registrados."""
     with sqlite3.connect(DB_NAME) as conn:
         cursor = conn.cursor()
         cursor.execute('SELECT views, clicks FROM metrics WHERE id = 1')
@@ -47,47 +54,55 @@ def get_metrics():
 
 @app.route('/')
 def index():
-    """
-    Rota principal da simulação.
-    A cada acesso, contabiliza +1 na métrica 'views' e exibe o formulário (index.html).
-    """
     increment_metric('views')
     return render_template('index.html')
 
+@app.route('/form')
+def form_page():
+    return render_template('form.html')
+
 @app.route('/submit', methods=['POST'])
 def submit():
-    """
-    Rota acionada ao enviar o formulário.
-    IMPORTANTE CONFORMIDADE LGPD:
-    Não acessamos 'request.form' nem guardamos IPs/dados.
-    Apenas contabilizamos +1 na métrica 'clicks' e redirecionamos.
-    """
+    nome = request.form.get('nome')
+    
+    # Ignora CPF e Telefone. Salva apenas o nome no banco de dados.
+    if nome:
+        with sqlite3.connect(DB_NAME) as conn:
+            cursor = conn.cursor()
+            cursor.execute('INSERT INTO captured_names (nome) VALUES (?)', (nome,))
+            conn.commit()
+            
+    # Contabiliza +1 clique (envio de formulário)
     increment_metric('clicks')
+    
     return redirect(url_for('awareness'))
-
 
 @app.route('/reset')
 def reset_metrics():
-    """Zera os contadores de acessos e cliques no banco de dados."""
     with sqlite3.connect(DB_NAME) as conn:
         cursor = conn.cursor()
         cursor.execute('UPDATE metrics SET views = 0, clicks = 0 WHERE id = 1')
+        cursor.execute('DELETE FROM captured_names')
         conn.commit()
-    return redirect(url_for('stats'))
+    # Redireciona de volta para os stats usando a senha atual
+    senha_verdadeira = os.getenv('SENHA_ADMIN')
+    return redirect(url_for('stats', key=senha_verdadeira))
 
 @app.route('/awareness')
 def awareness():
-    """Exibe a página educativa informando sobre a simulação de phishing (awareness.html)."""
     return render_template('awareness.html')
-
-
 
 @app.route('/stats')
 def stats():
-    """Exibe o painel com o resultado consolidado e porcentagem de vulnerabilidade (stats.html)."""
-    views, clicks = get_metrics()
+    # Puxa a senha da URL e a senha do arquivo .env
+    senha_digitada = request.args.get('key')
+    senha_verdadeira = os.getenv('SENHA_ADMIN')
     
-    # Cálculo da taxa de vulnerabilidade (evita divisão por zero)
+    # Bloqueia o acesso se a senha estiver errada
+    if senha_digitada != senha_verdadeira:
+        return "ACESSO NEGADO: Apenas o administrador pode ver esta página. Insira a chave correta na URL.", 403
+
+    views, clicks = get_metrics()
     conversion_rate = (clicks / views * 100) if views > 0 else 0.0
     
     return render_template(
@@ -98,13 +113,9 @@ def stats():
     )
 
 if __name__ == '__main__':
-    # Inicializa o banco de dados antes de subir o servidor
     init_db()
-    
+    senha_verdadeira = os.getenv('SENHA_ADMIN')
     print("Servidor iniciado com sucesso!")
     print("Acesse a simulação em: http://127.0.0.1:5000")
-    print("Acesse as estatísticas em: http://127.0.0.1:5000/stats")
-
-    
-    
+    print(f"Acesse as estatísticas em: http://127.0.0.1:5000/stats?key={senha_verdadeira}")
     app.run(debug=True, port=5000)

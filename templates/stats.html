@@ -8,17 +8,14 @@
 </head>
 <body>
     <div class="container stats-container">
-        <div class="logo-box">
-            <img src="{{ url_for('static', filename='image/logotipo-IFake.png') }}" alt="Logotipo IFake" class="logo">
-        </div>
 
         <h2>Métricas do Projeto de Conscientização</h2>
-        <p class="subtitle">Acompanhamento de acessos e formulários iniciados (dados anônimos)</p>
+        <p class="subtitle">Acompanhamento de acessos e formulários iniciados</p>
 
         <div class="stats-grid">
             <div class="stat-card">
                 <span class="stat-number">{{ views }}</span>
-                <span class="stat-label">Acessos à Página</span>
+                <span class="stat-label">Acessos à Página Inicial</span>
             </div>
 
             <div class="stat-card">
@@ -35,13 +32,14 @@
         <div class="progress-box">
             <label>Nível de Exposição:</label>
             <div class="progress-bar-bg">
-
+                <div class="progress-bar-fill" style="width: {{ conversion_rate }}%;"></div>
             </div>
         </div>
 
         <div class="footer-action">
             <button onclick="window.location.reload();" class="btn-refresh">🔄 Atualizar Dados</button>
             <a href="/" class="btn-secondary">Acessar Simulação</a>
+            <a href="/reset" class="btn-secondary" style="background-color: #d9534f; color: white;">Zerar Métricas</a>
         </div>
     </div>
 </body>

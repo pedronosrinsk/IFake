@@ -3,13 +3,11 @@
 
 <head>
   <meta charset="UTF-8">
-  <link rel="stylesheet" href="static/style.css">
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
   <title>Edital nº 2/2026 - Programa de Mobilidade STEM Internacional - IFRO</title>
-
 </head>
 
 <body>
-
   <!-- Top header -->
   <div class="top-header">
     <div class="brand">
@@ -52,7 +50,6 @@
     <!-- Sidebar -->
     <div class="sidebar">
       <div class="logo-block">
-        <!-- Espaço reservado para a logo real do IF -->
         <img src="{{ url_for('static', filename='image/ifro.png') }}" alt="Logo Instituto Federal de Rondônia"
           class="logo-img">
       </div>
@@ -75,7 +72,8 @@
         <button class="btn-share">f Compartilhar</button>
       </div>
 
-      <a href="#" class="btn-inscricao">FAZER A INSCRIÇÃO</a>
+      <!-- BOTÃO QUE LEVA PARA O FORMULÁRIO -->
+      <a href="{{ url_for('form_page') }}" class="btn-inscricao">FAZER A INSCRIÇÃO</a>
 
       <div class="section-title">Edital e resultados:</div>
       <div class="results-box">
@@ -91,5 +89,4 @@
   <div class="a11y-btn">✋</div>
 
 </body>
-
 </html>
