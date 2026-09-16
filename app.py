@@ -3,14 +3,18 @@ import os
 from dotenv import load_dotenv
 from flask import Flask, render_template, redirect, url_for, request
 
-# Carrega a senha escondida do arquivo .env
 load_dotenv()
 
 app = Flask(__name__)
-DB_NAME = "/home/Pedronosrinss/IFake/metrics.db"
+
+# --- ESTA É A MÁGICA QUE RESOLVE O ERRO EM QUALQUER PC ---
+PASTA_ATUAL = os.path.dirname(os.path.abspath(__file__))
+DB_NAME = os.path.join(PASTA_ATUAL, 'metrics.db')
+# ---------------------------------------------------------
 
 def init_db():
     with sqlite3.connect(DB_NAME) as conn:
+# ... (resto do código)
         cursor = conn.cursor()
         
         # Tabela de métricas (cliques e visualizações)
